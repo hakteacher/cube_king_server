@@ -8,10 +8,11 @@ CORS(app)
 
 UPLOAD_FOLDER = './uploads'
 
-# uploads가 파일로 되어 있으면 삭제
+# 📦 uploads 폴더가 파일로 되어 있으면 삭제
 if os.path.exists(UPLOAD_FOLDER) and not os.path.isdir(UPLOAD_FOLDER):
     os.remove(UPLOAD_FOLDER)
 
+# 📂 uploads 폴더 생성
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route('/')
@@ -28,7 +29,8 @@ def upload_image():
     filepath = os.path.join(UPLOAD_FOLDER, filename)
     image.save(filepath)
 
-    # 🔧 큐브 분석 예시 (임시값)
+    # 🔍 큐브 분석 결과 예시 (총 54글자: 6면 * 9스티커)
+    # 순서: U (윗면), R (오른쪽), F (앞면), D (아랫면), L (왼쪽), B (뒷면)
     cube_state = "UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB"
 
     return jsonify({
