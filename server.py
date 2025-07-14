@@ -16,8 +16,11 @@ def upload_image():
     filepath = os.path.join(UPLOAD_FOLDER, filename)
     image.save(filepath)
 
-    # 여기에 나중에 분석 로직 추가 가능
-    return jsonify({'result': '큐브 분석 완료', 'filename': filename})
+    # 분석 결과 예시
+    cube_state = "UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB"
 
-if __name__ == '__main__':
-    app.run(debug=True)
+    return jsonify({
+        'result': '큐브 분석 완료',
+        'cube_state': cube_state,
+        'filename': filename
+    })
