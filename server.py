@@ -2,13 +2,14 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
 import uuid
+import kociemba  # 큐브 해법 계산 라이브러리
 
 app = Flask(__name__)
 CORS(app)
 
 UPLOAD_FOLDER = './uploads'
 
-# uploads가 파일로 되어 있으면 삭제
+# uploads가 파일이면 삭제
 if os.path.exists(UPLOAD_FOLDER) and not os.path.isdir(UPLOAD_FOLDER):
     os.remove(UPLOAD_FOLDER)
 
@@ -32,12 +33,18 @@ def upload_images():
         image.save(filepath)
         images.append(filepath)
 
-    # ✅ 실제 분석 로직이 들어갈 자리
+    # ⛔️ 실제 OpenCV 분석은 추후 구현 예정
     cube_state = "UUUUUUUUURRRRRRRRRFFFFFFFFFDDDDDDDDDLLLLLLLLLBBBBBBBBB"
+
+    try:
+        solution = kociemba.solve(cube_state)
+    except Exception as e:
+        return jsonify({'error': f'큐브 상태가 유효하지 않음: {e}'}), 400
 
     return jsonify({
         'result': '큐브 분석 완료',
-        'cube_state': cube_state
+        'cube_state': cube_state,
+        'solution': solution
     })
 
 if __name__ == '__main__':
