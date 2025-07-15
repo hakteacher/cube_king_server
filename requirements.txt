@@ -1,5 +1,5 @@
 flask
 flask-cors
-kociemba==1.2.1
 opencv-python
 numpy
+kociemba
